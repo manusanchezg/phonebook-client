@@ -1,34 +1,15 @@
-import React from "react";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-  from,
-} from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
+import React, { Suspense, lazy } from "react";
+import { ApolloProvider } from "@apollo/client";
+import Utils from "./utils";
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
-      alert(`Graphql error ${message}`);
-    });
-  }
-});
-const link = from([
-  errorLink,
-  new HttpLink({ uri: "http://localhost/3333/graphql" }),
-]);
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link,
-});
+const client = Utils.getApolloClient()
 
 function App() {
   return (
     <ApolloProvider client={client}>
+      <Suspense>
       <div className="App">Phone boook app</div>
+      </Suspense>
     </ApolloProvider>
   );
 }
