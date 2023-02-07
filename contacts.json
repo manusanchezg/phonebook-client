@@ -1,0 +1,118 @@
+{
+  "data": {
+    "contacts": [
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+        "firstName": "Roman",
+        "lastName": "Bando",
+        "nickname": "BestoFriendo",
+        "phoneNumbers": [116547852, 51387584],
+        "photo": "./assets/profile.svg"
+      },
+      {
+        "id": "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+        "firstName": "Aramis",
+        "lastName": "Cohen",
+        "nickname": "AraMister",
+        "phoneNumbers": [323543634, 324343545],
+        "photo": "./assets/profile.svg"
+      }
+    ]
+  }
+}

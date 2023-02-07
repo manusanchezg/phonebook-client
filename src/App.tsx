@@ -1,14 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import { ApolloProvider } from "@apollo/client";
 import Utils from "./utils";
+import HomePage from "./components/home/HomePage";
 
-const client = Utils.getApolloClient()
+const client = Utils.getApolloClient();
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <Suspense>
-      <div className="App">Phone boook app</div>
+        <HomePage />
       </Suspense>
     </ApolloProvider>
   );

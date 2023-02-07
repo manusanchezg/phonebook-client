@@ -18,7 +18,7 @@ export default class Utils {
     });
     const link = from([
       errorLink,
-      new HttpLink({ uri: "http://localhost/3333/graphql" }),
+      new HttpLink({ uri: "http://localhost:3333/graphql" }),
     ]);
 
     const client = new ApolloClient({
