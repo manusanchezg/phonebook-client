@@ -1,74 +1,189 @@
-import React from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ErrorsInterface } from "../../interface";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/esm/Button";
+import defaultProfilePic from "../../assets/profile.svg";
+import { ChangeEvent, useCallback, useState } from "react";
+import plusCircle from "../../assets/plus-circle.svg";
+import "../../style/CreateContact.css";
 
-function CreateContact() {
-  const initialValues = {
+function CreateContact({
+  show,
+  onHide,
+}: {
+  show: boolean;
+  onHide: () => void;
+}) {
+  const [errors, setErrors] = useState({
+    firstNameError: "",
+    lastNameError: "",
+    phoneNumberError: "",
+  });
+  const [initialValues, setValues] = useState({
     firstName: "",
     lastName: "",
-    phoneNumber: "",
+    phoneNumber: [],
     nickname: "",
     photo: "",
-  };
+  });
+
+  const validateFirstName = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const regex = /^[a-zA-Z]+$/;
+      let p = document.getElementById("firstNameError");
+      let firstNameError;
+      setValues({ ...initialValues, firstName: e.target.value });
+      if (!initialValues.firstName) {
+        firstNameError = "Required field";
+        p!.textContent = firstNameError;
+        setErrors({ ...errors, firstNameError });
+      } else if (!regex.test(initialValues.firstName)) {
+        firstNameError =
+          "First name must only contain upper case and lower case letters";
+        p!.textContent = firstNameError;
+        setErrors({ ...errors, firstNameError });
+      } else {
+        p!.textContent = "";
+        setErrors({ ...errors, firstNameError: "" });
+      }
+    },
+    [errors]
+  );
+
+  const addInputField = useCallback(
+    (e: React.MouseEvent<HTMLImageElement>) => {
+      setValues({...initialValues, phoneNumber: [...initialValues.phoneNumber]})
+    },
+    [initialValues.phoneNumber]
+  );
+
+  const validateLastName = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const regex = /^[a-zA-Z]+$/;
+      let p = document.getElementById("lastNameError");
+      let lastNameError;
+      setValues({ ...initialValues, lastName: e.target.value });
+      if (!initialValues.lastName) {
+        lastNameError = "Required field";
+        p!.textContent = lastNameError;
+        setErrors({ ...errors, lastNameError });
+      } else if (!regex.test(initialValues.lastName)) {
+        lastNameError =
+          "First name must only contain upper case and lower case letters";
+        p!.textContent = lastNameError;
+        setErrors({ ...errors, lastNameError });
+      } else {
+        p!.textContent = "";
+        setErrors({ ...errors, lastNameError: "" });
+      }
+    },
+    [errors]
+  );
+
+  const image = "";
   return (
-    <>
-      <div>
-        <figure>
-          <img src="" alt="" />
-          <figure>Profile picture</figure>
-        </figure>
-        <input type="file" />
-      </div>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-        validate={(values) => {
-          const errors: ErrorsInterface = {};
-          if (
-            !values.firstName ||
-            !values.lastName ||
-            !values.phoneNumber ||
-            !values.photo
-          ) {
-            errors.firstName = "Field required";
-            errors.lastName = "Field required";
-            errors.nickname = "Field required";
-            errors.phoneNumber = "Field required";
-          } else if (
-            !/^[a-zA-Z]+$/g.test(values.firstName) ||
-            !/^[a-zA-Z]+$/g.test(values.lastName) ||
-            !/^[a-zA-Z]+$/g.test(values.nickname)
-          ) {
-            errors.firstName = "First name should be only letters";
-            errors.lastName = "Last name should be only letters";
-            errors.nickname = "Nickname should be only letters";
-          } else if (
-            /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$/.test(
-              values.phoneNumber
-            )
-          ) {
-            errors.phoneNumber = "Incorrect phone number";
-          }
-          return errors;
-        }}
-      >
-        <Form>
-          <Field type="text" name="firstName" />
-          <ErrorMessage name="firstName" component="small" />
-          <Field type="text" name="lastName" />
-          <ErrorMessage name="lastName" component="small" />
-          <Field type="text" name="Nickname" />
-          <ErrorMessage name="Nickname" component="small" />
-          <Field type="text" name="phoneNumber" />
-          <ErrorMessage name="phoneNumber" component="small" />
-        </Form>
-      </Formik>
-    </>
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Add new contact
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div>
+          <figure className="d-flex flex-column justify-content-center ms-3  w-25">
+            <img
+              className="img-thumbnail"
+              src={image ? image : defaultProfilePic}
+              alt=""
+            />
+            <figcaption className="mt-2 text-center">
+              Profile picture
+            </figcaption>
+          </figure>
+        </div>
+        <form>
+          <div className="input-group mb-3">
+            <label htmlFor="firstName" className="input-group-text">
+              First name: <span className="text-danger">*</span>{" "}
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              className="form-control"
+              onBlur={validateFirstName}
+              onChange={validateFirstName}
+            />
+          </div>
+          <p className="mb-3 text-danger" id="firstNameError"></p>
+          <div className="input-group mb-3">
+            <label htmlFor="lastName" className="input-group-text">
+              Last name: <span className="text-danger">*</span>{" "}
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              className="form-control"
+              onChange={validateLastName}
+              onBlur={validateLastName}
+            />
+          </div>
+          <p className="mb-3 text-danger" id="lastNameError">
+            {" "}
+          </p>
+          <div className="input-group mb-3">
+            <label htmlFor="nickname" className="input-group-text">
+              Nickname:{" "}
+            </label>
+            <input type="text" name="Nickname" className="form-control" />
+          </div>
+          <p className="mb-3 text-danger"> </p>
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="w-100">
+              <div className="input-group mb-3">
+                <label htmlFor="phoneNumber" className="input-group-text">
+                  Phone number: <span className="text-danger">*</span>{" "}
+                </label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <img
+              src={plusCircle}
+              alt=""
+              onClick={addInputField}
+              className="button-add-field"
+            />
+          </div>
+          <p className="mb-3 text-danger" id="phoneNumberError">
+            {" "}
+          </p>
+          <div className="input-group mb-3">
+            <label htmlFor="profilePic" className="me-3">
+              Upload an image <span className="text-danger">*</span>
+            </label>
+            <input type="file" name="profilePic" />
+          </div>
+          <Modal.Footer>
+            <span className="me-5">
+              Fields with <span className="text-danger">*</span> are required
+            </span>
+            <Button onClick={onHide} className="me-3">
+              Close
+            </Button>
+            <Button type="submit" variant="success">
+              Submit
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal.Body>
+    </Modal>
   );
 }
 

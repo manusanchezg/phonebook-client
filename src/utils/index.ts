@@ -1,11 +1,6 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-  from,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import { ErrorsInterface, InitalValuesInterface } from "../interface";
 
 export default class Utils {
   static getApolloClient(): ApolloClient<{}> {
@@ -27,4 +22,15 @@ export default class Utils {
     });
     return client;
   }
+
+  static validateContactInfo(values: InitalValuesInterface): any {
+ if (
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$/.test(
+        values.phoneNumber
+      )
+    )
+        {}
+  }
 }
+
+
