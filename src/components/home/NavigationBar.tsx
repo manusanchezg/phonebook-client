@@ -3,7 +3,7 @@ import { Nav, Form, Button } from "react-bootstrap";
 
 function NavigationBar({onShow}: {onShow: React.MouseEventHandler}) {
   return (
-    <Nav className="justify-content-end m-4" activeKey="/home">
+    <Nav className="justify-content-end my-3 mx-4" activeKey="/home">
       <Nav.Item>
         <Nav.Link onClick={onShow}>Add Contact</Nav.Link>
       </Nav.Item>

@@ -1,24 +1,15 @@
-import React from 'react';
+import React from "react";
 import { data } from "../../utils/contacts.js";
-import profilePic from "../../assets/profile.svg"
+import Contact from "./Contact";
 
 function ContactList() {
   return (
-    <main>
-      {data.contacts.map(contact => (
-        <div key={contact.id} className="d-flex border border-secondary rounded mb-4 mx-4">
-          <figure className='w-25 p-3'>
-            <img src={profilePic} className="w-50" alt="" />
-          </figure>
-          <div className='py-3'>
-          <h2>
-            {contact.nickname ? contact.nickname : `${contact.firstName} ${contact.lastName}`}
-          </h2>
-          </div>
-        </div>
+    <main className="d-flex flex-column justify-content-center align-items-center bg-color-BBE5ED pt-3">
+      {data.contacts.map((contact) => (
+        <Contact key={contact.id} contact={contact} />
       ))}
     </main>
-  )
+  );
 }
 
-export default ContactList
+export default ContactList;

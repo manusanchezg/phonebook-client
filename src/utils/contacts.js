@@ -2,6 +2,7 @@ export const data = {
   contacts: [
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30b",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "",
@@ -10,6 +11,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4187",
+      address: "My home 909",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
@@ -18,6 +20,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30c",
+      address: "Menachem Begin 111",
       firstName: "Manuel",
       lastName: "Sanchez",
       nickname: "Manu",
@@ -26,6 +29,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4186",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "",
@@ -34,6 +38,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30d",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "BestoFriendo",
@@ -42,6 +47,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4188",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
@@ -50,6 +56,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30e",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "BestoFriendo",
@@ -58,6 +65,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4189",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
@@ -66,6 +74,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30f",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "BestoFriendo",
@@ -74,6 +83,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4180",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
@@ -82,6 +92,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30h",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "BestoFriendo",
@@ -90,6 +101,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4181",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
@@ -98,6 +110,7 @@ export const data = {
     },
     {
       id: "6cd96e73-0943-4923-bd1b-feb502bbc30i",
+      address: "Yigal Alon 90",
       firstName: "Roman",
       lastName: "Bando",
       nickname: "BestoFriendo",
@@ -106,6 +119,7 @@ export const data = {
     },
     {
       id: "93b8a1bb-4cf9-4fab-b566-d757b32e4182",
+      address: "Yigal Alon 90",
       firstName: "Aramis",
       lastName: "Cohen",
       nickname: "AraMister",
