@@ -1,14 +1,14 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { LOAD_CONTACTS } from "../../GraphQL/queries";
-import { ContactInterface, InitalValuesInterface } from "../../interface";
+import { ContactInterface } from "../../interface";
 import Contact from "./Contact";
 
 function ContactList({ search }: { search: String }) {
   const [contacts, setContacts] = useState<ContactInterface[]>([]);
   let offset = 0;
   const LIMIT = 5;
-  const { data, loading, error, fetchMore, refetch } = useQuery(LOAD_CONTACTS, {
+  const { data, loading, error, refetch } = useQuery(LOAD_CONTACTS, {
     variables: { offset, limit: LIMIT, search },
   });
 
@@ -19,7 +19,6 @@ function ContactList({ search }: { search: String }) {
     ) {
       offset += 5;
       refetch({ offset });
-      console.log(offset);
     }
   };
 

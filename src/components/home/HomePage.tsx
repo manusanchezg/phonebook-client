@@ -1,5 +1,4 @@
 import React from "react";
-import ContactInfo from "../contact/ContactInfo";
 import CreateContact from "../contact/CreateContact";
 import ContactList from "./ContactList";
 import NavigationBar from "./NavigationBar";

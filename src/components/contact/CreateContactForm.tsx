@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { ObjectType } from "typescript";
 import plusCircle from "../../assets/plus-circle.svg";
-import { ErrorsInterface, InitalValuesInterface } from "../../interface";
+import { InitalValuesInterface } from "../../interface";
 import Validations from "../../utils/validation";
 
 function CreateContactForm({
