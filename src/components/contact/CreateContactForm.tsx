@@ -1,20 +1,26 @@
 import React, { useCallback, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { ObjectType } from "typescript";
 import plusCircle from "../../assets/plus-circle.svg";
+import { ErrorsInterface, InitalValuesInterface } from "../../interface";
 import Validations from "../../utils/validation";
 
-function CreateContactForm({ onHide }: { onHide: () => void }) {
+function CreateContactForm({
+  onHide,
+  initialValues,
+  setValues,
+  addUser,
+}: {
+  onHide: () => void;
+  initialValues: InitalValuesInterface;
+  setValues: Function;
+  addUser: Function;
+}) {
   const [errors, setErrors] = useState({
     firstNameError: "",
     lastNameError: "",
     phoneNumberError: "",
-  });
-  const [initialValues, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: [],
-    nickname: "",
-    photo: "",
+    nicknameError: "",
   });
 
   const validateRequiredStrings = useCallback(
@@ -40,13 +46,46 @@ function CreateContactForm({ onHide }: { onHide: () => void }) {
     [errors]
   );
 
+  const validatePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let p = document.getElementById("phoneNumberError");
+    let phoneNumberError;
+    setValues({ ...initialValues, phoneNumber: e.target.value });
+    const isEmpty = Validations.isEmpty(e.target.value);
+    const isPhoneNumber = Validations.isPhoneNumber(e.target.value);
+    if (isEmpty) {
+      phoneNumberError = isEmpty;
+      p!.textContent = phoneNumberError;
+    } else if (isPhoneNumber) {
+      phoneNumberError = isPhoneNumber;
+      p!.textContent = phoneNumberError;
+    } else {
+      p!.textContent = "";
+      setErrors({ ...errors, phoneNumberError: "" });
+    }
+  };
+
+  const handleAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const requiredValues = {
+      firstName: initialValues.firstName,
+      lastName: initialValues.lastName,
+      phoneNumbers: initialValues.phoneNumber,
+    };
+    let submit = true
+    for (const error in errors) {
+      for (const value in requiredValues) {
+        // console.log(e.target)
+        //@ts-ignore
+        if (errors[error] && !requiredValues[value]) {
+          alert("Fill all the fields")
+          submit = false
+        }
+      }
+    }
+    submit && addUser({...initialValues, photo: "Some photo"})
+  };
+
   const addInputField = useCallback(
-    (e: React.MouseEvent<HTMLImageElement>) => {
-      setValues({
-        ...initialValues,
-        phoneNumber: [...initialValues.phoneNumber],
-      });
-    },
+    (e: React.MouseEvent<HTMLImageElement>) => {},
     [initialValues.phoneNumber]
   );
   return (
@@ -99,7 +138,14 @@ function CreateContactForm({ onHide }: { onHide: () => void }) {
             <label htmlFor="phoneNumber" className="input-group-text">
               Phone number: <span className="text-danger">*</span>{" "}
             </label>
-            <input type="text" name="phoneNumber" className="form-control" />
+            <input
+              type="text"
+              onChange={validatePhoneNumber}
+              onBlur={validatePhoneNumber}
+              name="phoneNumber"
+              className="form-control"
+              placeholder="Eg: +972-052-42214722"
+            />
           </div>
         </div>
         <img
@@ -125,7 +171,7 @@ function CreateContactForm({ onHide }: { onHide: () => void }) {
         <Button onClick={onHide} className="me-3">
           Close
         </Button>
-        <Button type="submit" variant="success">
+        <Button type="button" onClick={handleAddUser} variant="success" id="submit-button">
           Submit
         </Button>
       </Modal.Footer>

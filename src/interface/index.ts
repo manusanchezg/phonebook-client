@@ -24,3 +24,12 @@ export interface ContactInterface {
     photo: string;
   };
 }
+
+export interface ContactInfo {
+    id: string
+    firstName: string;
+    lastName: string;
+    phoneNumbers: number[];
+    nickname: string;
+    photo: string;
+}

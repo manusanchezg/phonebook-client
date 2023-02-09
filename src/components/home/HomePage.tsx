@@ -5,11 +5,12 @@ import NavigationBar from "./NavigationBar";
 
 function HomePage() {
   const [modalShow, setModalShow] = React.useState(false);
+  const [search, setSearch] = React.useState('');
 
   return (
     <div>
-      <NavigationBar onShow={() => setModalShow(true)} />
-      <ContactList />
+      <NavigationBar onShow={() => setModalShow(true)} setSearch={setSearch} />
+      <ContactList search={search} />
       <CreateContact show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );

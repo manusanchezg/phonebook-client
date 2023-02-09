@@ -1,7 +1,16 @@
 import React from "react";
 import { Nav, Form, Button } from "react-bootstrap";
 
-function NavigationBar({onShow}: {onShow: React.MouseEventHandler}) {
+function NavigationBar({
+  onShow,
+  setSearch,
+}: {
+  onShow: React.MouseEventHandler;
+  setSearch: Function;
+}) {
+  const handleSearch = (e: any) => {
+    setTimeout(() => setSearch(e.target.value), 400);
+  };
   return (
     <Nav className="justify-content-end my-3 mx-4" activeKey="/home">
       <Nav.Item>
@@ -13,6 +22,8 @@ function NavigationBar({onShow}: {onShow: React.MouseEventHandler}) {
           placeholder="Search"
           className="me-2"
           aria-label="Search"
+          id="searchField"
+          onChange={handleSearch}
         />
         <Button variant="outline-success">Search</Button>
       </Form>

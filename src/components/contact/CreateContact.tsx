@@ -1,5 +1,9 @@
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import defaultProfilePic from "../../assets/profile.svg";
+import { CREATE_CONTACT } from "../../GraphQL/mutations";
+import { InitalValuesInterface } from "../../interface";
 import "../../style/CreateContact.css";
 import CreateContactForm from "./CreateContactForm";
 
@@ -10,6 +14,21 @@ function CreateContact({
   show: boolean;
   onHide: () => void;
 }) {
+  const [initialValues, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: [],
+    nickname: "",
+    photo: "",
+  });
+
+  const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
+
+  const addUser = () => {
+    CreateContact({
+      variables: { createContactInput: initialValues },
+    });
+  };
 
   const image = "";
   return (
@@ -33,12 +52,15 @@ function CreateContact({
               src={image ? image : defaultProfilePic}
               alt=""
             />
-            <figcaption className="mt-2">
-              Profile picture
-            </figcaption>
+            <figcaption className="mt-2">Profile picture</figcaption>
           </figure>
         </div>
-        <CreateContactForm onHide={onHide}/>
+        <CreateContactForm
+          onHide={onHide}
+          initialValues={initialValues}
+          setValues={setValues}
+          addUser={addUser}
+        />
       </Modal.Body>
     </Modal>
   );

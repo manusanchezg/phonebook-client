@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { ErrorsInterface, InitalValuesInterface } from "../interface";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 export default class Utils {
   static getApolloClient(): ApolloClient<{}> {
@@ -15,10 +16,22 @@ export default class Utils {
       errorLink,
       new HttpLink({ uri: "http://localhost:3333/graphql" }),
     ]);
+    const cache = new InMemoryCache({
+      typePolicies: {
+        useQuery: {
+          fields: {
+            contacts: {
+              keyArgs: false,
+              merge: true,
+            },
+          },
+        },
+      },
+    });
 
     const client = new ApolloClient({
-      cache: new InMemoryCache(),
       link,
+      cache,
     });
     return client;
   }
