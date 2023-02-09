@@ -20,4 +20,10 @@ export default class Validations {
     if(!regex.test(string)) return "Inconrrect phone number"
     return ""
   }
+
+  static isAddress(string: string) {
+    const regex = /^[a-zA-Z\s]+(\,)? [a-zA-Z]+(\,)? [0-9]{5,6}$/
+    if(!regex.test(string)) return "Invalid address"
+    return ""
+  }
 }

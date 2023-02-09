@@ -1,13 +1,15 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { LOAD_CONTACTS } from "../../GraphQL/queries";
-import { ContactInfo, InitalValuesInterface } from "../../interface";
+import { ContactInterface, InitalValuesInterface } from "../../interface";
 import Contact from "./Contact";
 
 function ContactList({ search }: { search: String }) {
+  const [contacts, setContacts] = useState<ContactInterface[]>([]);
+  let offset = 0;
   const LIMIT = 5;
-  const { data, loading, error, fetchMore } = useQuery(LOAD_CONTACTS, {
-    variables: { offset: 0, limit: LIMIT, search },
+  const { data, loading, error, fetchMore, refetch } = useQuery(LOAD_CONTACTS, {
+    variables: { offset, limit: LIMIT, search },
   });
 
   const onScroll = async (e: any) => {
@@ -15,29 +17,22 @@ function ContactList({ search }: { search: String }) {
       window.innerHeight + e.target.documentElement.scrollTop + 1 >=
       e.target.documentElement.scrollHeight
     ) {
-      await fetchMore({
-        variables: { offset: data.contacts.length },
-        //   updateQuery: (previousResult, { fetchMoreResult }) => {
-        //     console.log(previousResult.contacts, fetchMoreResult.contacts)
-        //     const newEntries = fetchMoreResult.contacts;
-        //     return {
-        //       contacts: {
-        //         nextCursor: fetchMoreResult.contacts.nextCursor,
-        //         entries: [...previousResult.contacts, ...newEntries],
-        //       },
-        //     };
-        //   },
-      });
+      offset += 5;
+      refetch({ offset });
+      console.log(offset);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("scroll", onScroll);
+    if (!loading) setContacts([...contacts, ...data.contacts]);
   }, [data]);
+
+  useEffect(() => document.addEventListener("scroll", onScroll), []);
+  // console.log(contacts)
   return (
     <main className="d-flex flex-column justify-content-center align-items-center bg-color-BBE5ED pt-3">
       {!loading ? (
-        data.contacts.map((contact: ContactInfo) => (
+        contacts.map((contact: ContactInterface) => (
           <Contact key={contact.id} contact={contact} />
         ))
       ) : (

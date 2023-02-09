@@ -12,3 +12,17 @@ export const LOAD_CONTACTS = gql`
     }
   }
 `;
+
+export const GET_CONTACT_INFO = gql`
+  query Contact($contactId: ID!) {
+    Contact(id: $contactId) {
+      id
+      firstName
+      lastName
+      nickname
+      phoneNumbers
+      address
+      photo
+  }
+}
+`

@@ -3,7 +3,6 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import defaultProfilePic from "../../assets/profile.svg";
 import { CREATE_CONTACT } from "../../GraphQL/mutations";
-import { InitalValuesInterface } from "../../interface";
 import "../../style/CreateContact.css";
 import CreateContactForm from "./CreateContactForm";
 

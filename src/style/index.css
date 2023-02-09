@@ -25,3 +25,12 @@ code {
 .border-BFBCCB {
   border: 2px solid #BFBCCB !important;
 }
+
+.upload-button {
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: lightgray;
+  transition: 0.3s;
+}

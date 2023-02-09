@@ -15,17 +15,6 @@ export interface InitalValuesInterface {
 }
 
 export interface ContactInterface {
-  contact: {
-    id: string
-    firstName: string;
-    lastName: string;
-    phoneNumbers: number[];
-    nickname: string;
-    photo: string;
-  };
-}
-
-export interface ContactInfo {
     id: string
     firstName: string;
     lastName: string;

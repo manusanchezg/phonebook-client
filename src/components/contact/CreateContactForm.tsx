@@ -21,6 +21,7 @@ function CreateContactForm({
     lastNameError: "",
     phoneNumberError: "",
     nicknameError: "",
+    addressError: "",
   });
 
   const validateRequiredStrings = useCallback(
@@ -64,24 +65,40 @@ function CreateContactForm({
     }
   };
 
+  const validateAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let p = document.getElementById("addressError");
+    let addressError;
+    const isEmpty = Validations.isEmpty(e.target.value);
+    const isAddress = Validations.isAddress(e.target.value);
+    if(!isEmpty) {
+      addressError = isEmpty;
+      p!.textContent = addressError
+    } else if(!isAddress) {
+      addressError = isAddress;
+      p!.textContent = addressError
+    } else {
+      p!.textContent = "";
+      setErrors({ ...errors, addressError: "" });
+    }
+  };
+
   const handleAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requiredValues = {
       firstName: initialValues.firstName,
       lastName: initialValues.lastName,
       phoneNumbers: initialValues.phoneNumber,
     };
-    let submit = true
+    let submit = true;
     for (const error in errors) {
       for (const value in requiredValues) {
-        // console.log(e.target)
         //@ts-ignore
         if (errors[error] && !requiredValues[value]) {
-          alert("Fill all the fields")
-          submit = false
+          alert("Fill all the fields");
+          submit = false;
         }
       }
     }
-    submit && addUser({...initialValues, photo: "Some photo"})
+    submit && addUser({ ...initialValues, photo: "Some photo" });
   };
 
   const addInputField = useCallback(
@@ -127,11 +144,17 @@ function CreateContactForm({
       <p className="mb-3 text-danger"> </p>
       <div className="input-group mb-3">
         <label htmlFor="address" className="input-group-text">
-          Address:{" "}
+          Address: <span className="text-danger">*</span>{" "}
         </label>
-        <input type="text" name="address" className="form-control" />
+        <input
+          type="text"
+          name="address"
+          placeholder="Eg: Menachem Begin 145, Tel Aviv"
+          onChange={validateAddress}
+          className="form-control"
+        />
       </div>
-      <p className="mb-3 text-danger"> </p>
+      <p className="mb-3 text-danger" id="addressError"></p>
       <div className="d-flex align-items-center justify-content-center">
         <div className="w-100">
           <div className="input-group mb-3">
@@ -168,10 +191,15 @@ function CreateContactForm({
         <span className="me-5">
           Fields with <span className="text-danger">*</span> are required
         </span>
-        <Button onClick={onHide} className="me-3">
+        <Button onClick={onHide} variant="danger" className="me-3">
           Close
         </Button>
-        <Button type="button" onClick={handleAddUser} variant="success" id="submit-button">
+        <Button
+          type="button"
+          onClick={handleAddUser}
+          variant="success"
+          id="submit-button"
+        >
           Submit
         </Button>
       </Modal.Footer>
