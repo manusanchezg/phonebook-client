@@ -5,12 +5,17 @@ export const CREATE_CONTACT = gql`
     $firstName: String!,
     $lastName: String!,
     $nickname: String,
-    $phoneNumbers: [Int]!,
+    $phoneNumbers: [Int!]!,
     $address: String!,
     $photo: String!,
     ) {
     createContact(
-      createContactInput: $createContactInput
+        firstName: $firstName
+        lastName: $lastName
+        nickname: $nickname
+        phoneNumbers: $phoneNumbers
+        photo: $photo
+        address: $address
     ) {
         firstName,
         lastName,

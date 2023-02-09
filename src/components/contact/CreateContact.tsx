@@ -24,16 +24,29 @@ function CreateContact({
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
 
   const addUser = () => {
+    console.log(initialValues);
     CreateContact({
-      variables: { createContactInput: initialValues },
-    });
+      variables: { ...initialValues, photo: "Some photo" },
+    }).then(result => console.log(result))
+    .catch(err => console.log(err))
+  };
+
+  const closePopUp = () => {
+    onHide()
+      setValues({
+        firstName: "",
+        lastName: "",
+        phoneNumber: [],
+        nickname: "",
+        photo: "",
+      });
   };
 
   const image = "";
   return (
     <Modal
       show={show}
-      onHide={onHide}
+      onHide={closePopUp}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered

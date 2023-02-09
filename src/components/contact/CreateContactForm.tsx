@@ -23,7 +23,30 @@ function CreateContactForm({
     addressError: "",
   });
 
-  const validateRequiredStrings = useCallback(
+  const validateLastName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, displayedError: string) => {
+      let p = document.getElementById(displayedError);
+      let lastNameError;
+      setValues({ ...initialValues, lastName: e.target.value });
+      const isEmpty = Validations.isEmpty(e.target.value);
+      const isOnlyLetters = Validations.isOnlyLetters(e.target.value);
+      if (isEmpty) {
+        lastNameError = isEmpty;
+        p!.textContent = lastNameError;
+        setErrors({ ...errors, lastNameError });
+      } else if (isOnlyLetters) {
+        lastNameError = isOnlyLetters;
+        p!.textContent = lastNameError;
+        setErrors({ ...errors, lastNameError });
+      } else {
+        p!.textContent = "";
+        setErrors({ ...errors, lastNameError: "" });
+      }
+    },
+    [errors]
+  );
+
+  const validateFirstName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, displayedError: string) => {
       let p = document.getElementById(displayedError);
       let firstNameError;
@@ -49,7 +72,6 @@ function CreateContactForm({
   const validatePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     let p = document.getElementById("phoneNumberError");
     let phoneNumberError;
-    setValues({ ...initialValues, phoneNumber: e.target.value });
     const isEmpty = Validations.isEmpty(e.target.value);
     const isPhoneNumber = Validations.isPhoneNumber(e.target.value);
     if (isEmpty) {
@@ -61,20 +83,25 @@ function CreateContactForm({
     } else {
       p!.textContent = "";
       setErrors({ ...errors, phoneNumberError: "" });
+      setValues({
+        ...initialValues,
+        phoneNumber: new Array(...new Set([...initialValues.phoneNumber, Number(e.target.value)])),
+      });
     }
   };
 
   const validateAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     let p = document.getElementById("addressError");
     let addressError;
+    setValues({ ...initialValues, address: e.target.value });
     const isEmpty = Validations.isEmpty(e.target.value);
     const isAddress = Validations.isAddress(e.target.value);
-    if(!isEmpty) {
+    if (!isEmpty) {
       addressError = isEmpty;
-      p!.textContent = addressError
-    } else if(!isAddress) {
+      p!.textContent = addressError;
+    } else if (!isAddress) {
       addressError = isAddress;
-      p!.textContent = addressError
+      p!.textContent = addressError;
     } else {
       p!.textContent = "";
       setErrors({ ...errors, addressError: "" });
@@ -97,7 +124,7 @@ function CreateContactForm({
         }
       }
     }
-    submit && addUser({ ...initialValues, photo: "Some photo" });
+    submit && addUser();
   };
 
   const addInputField = useCallback(
@@ -114,8 +141,8 @@ function CreateContactForm({
           type="text"
           name="firstName"
           className="form-control"
-          onBlur={(e) => validateRequiredStrings(e, "firstNameError")}
-          onChange={(e) => validateRequiredStrings(e, "firstNameError")}
+          onBlur={(e) => validateFirstName(e, "firstNameError")}
+          onChange={(e) => validateFirstName(e, "firstNameError")}
         />
       </div>
       <p className="mb-3 text-danger" id="firstNameError"></p>
@@ -127,8 +154,8 @@ function CreateContactForm({
           type="text"
           name="lastName"
           className="form-control"
-          onChange={(e) => validateRequiredStrings(e, "lastNameError")}
-          onBlur={(e) => validateRequiredStrings(e, "lastNameError")}
+          onChange={(e) => validateLastName(e, "lastNameError")}
+          onBlur={(e) => validateLastName(e, "lastNameError")}
         />
       </div>
       <p className="mb-3 text-danger" id="lastNameError">
@@ -190,7 +217,20 @@ function CreateContactForm({
         <span className="me-5">
           Fields with <span className="text-danger">*</span> are required
         </span>
-        <Button onClick={onHide} variant="danger" className="me-3">
+        <Button
+          onClick={() => {
+            onHide();
+              setValues({
+                firstName: "",
+                lastName: "",
+                phoneNumber: [],
+                nickname: "",
+                photo: "",
+              });
+          }}
+          variant="danger"
+          className="me-3"
+        >
           Close
         </Button>
         <Button
