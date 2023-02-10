@@ -23,7 +23,11 @@ function ContactList({ search }: { search: String }) {
   };
 
   useEffect(() => {
-    if (!loading) setContacts([...contacts, ...data.contacts]);
+    if (!search) {
+      if (!loading) setContacts([...contacts, ...data.contacts]);
+    } else {
+      if (!loading) setContacts([...data.contacts]);
+    }
   }, [data]);
 
   useEffect(() => document.addEventListener("scroll", onScroll), []);

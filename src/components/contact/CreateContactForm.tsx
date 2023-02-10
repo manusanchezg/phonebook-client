@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 import plusCircle from "../../assets/plus-circle.svg";
 import { InitalValuesInterface } from "../../interface";
+import Utils from "../../utils";
 import Validations from "../../utils/validation";
 
 function CreateContactForm({
@@ -22,114 +24,15 @@ function CreateContactForm({
     nicknameError: "",
     addressError: "",
   });
-
-  const validateLastName = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, displayedError: string) => {
-      let p = document.getElementById(displayedError);
-      let lastNameError;
-      setValues({ ...initialValues, lastName: e.target.value });
-      const isEmpty = Validations.isEmpty(e.target.value);
-      const isOnlyLetters = Validations.isOnlyLetters(e.target.value);
-      if (isEmpty) {
-        lastNameError = isEmpty;
-        p!.textContent = lastNameError;
-        setErrors({ ...errors, lastNameError });
-      } else if (isOnlyLetters) {
-        lastNameError = isOnlyLetters;
-        p!.textContent = lastNameError;
-        setErrors({ ...errors, lastNameError });
-      } else {
-        p!.textContent = "";
-        setErrors({ ...errors, lastNameError: "" });
-      }
-    },
-    [errors]
-  );
-
-  const validateFirstName = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, displayedError: string) => {
-      let p = document.getElementById(displayedError);
-      let firstNameError;
-      setValues({ ...initialValues, firstName: e.target.value });
-      const isEmpty = Validations.isEmpty(e.target.value);
-      const isOnlyLetters = Validations.isOnlyLetters(e.target.value);
-      if (isEmpty) {
-        firstNameError = isEmpty;
-        p!.textContent = firstNameError;
-        setErrors({ ...errors, firstNameError });
-      } else if (isOnlyLetters) {
-        firstNameError = isOnlyLetters;
-        p!.textContent = firstNameError;
-        setErrors({ ...errors, firstNameError });
-      } else {
-        p!.textContent = "";
-        setErrors({ ...errors, firstNameError: "" });
-      }
-    },
-    [errors]
-  );
-
-  const validatePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let p = document.getElementById("phoneNumberError");
-    let phoneNumberError;
-    const isEmpty = Validations.isEmpty(e.target.value);
-    const isPhoneNumber = Validations.isPhoneNumber(e.target.value);
-    if (isEmpty) {
-      phoneNumberError = isEmpty;
-      p!.textContent = phoneNumberError;
-    } else if (isPhoneNumber) {
-      phoneNumberError = isPhoneNumber;
-      p!.textContent = phoneNumberError;
-    } else {
-      p!.textContent = "";
-      setErrors({ ...errors, phoneNumberError: "" });
-      setValues({
-        ...initialValues,
-        phoneNumber: new Array(...new Set([...initialValues.phoneNumber, Number(e.target.value)])),
-      });
-    }
-  };
-
-  const validateAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let p = document.getElementById("addressError");
-    let addressError;
-    setValues({ ...initialValues, address: e.target.value });
-    const isEmpty = Validations.isEmpty(e.target.value);
-    const isAddress = Validations.isAddress(e.target.value);
-    if (!isEmpty) {
-      addressError = isEmpty;
-      p!.textContent = addressError;
-    } else if (!isAddress) {
-      addressError = isAddress;
-      p!.textContent = addressError;
-    } else {
-      p!.textContent = "";
-      setErrors({ ...errors, addressError: "" });
-    }
-  };
-
-  const handleAddUser = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const requiredValues = {
-      firstName: initialValues.firstName,
-      lastName: initialValues.lastName,
-      phoneNumbers: initialValues.phoneNumber,
-    };
-    let submit = true;
-    for (const error in errors) {
-      for (const value in requiredValues) {
-        //@ts-ignore
-        if (errors[error] && !requiredValues[value]) {
-          alert("Fill all the fields");
-          submit = false;
-        }
-      }
-    }
-    submit && addUser();
+  const requiredValues: any = {
+    firstName: initialValues.firstName,
+    lastName: initialValues.lastName,
+    phoneNumbers: initialValues.phoneNumbers,
   };
 
   const addInputField = useCallback(
     (e: React.MouseEvent<HTMLImageElement>) => {},
-    [initialValues.phoneNumber]
+    [initialValues.phoneNumbers]
   );
   return (
     <form>
@@ -141,8 +44,26 @@ function CreateContactForm({
           type="text"
           name="firstName"
           className="form-control"
-          onBlur={(e) => validateFirstName(e, "firstNameError")}
-          onChange={(e) => validateFirstName(e, "firstNameError")}
+          onBlur={(e) =>
+            Validations.validateFirstName(
+              e,
+              "firstNameError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
+          onChange={(e) =>
+            Validations.validateFirstName(
+              e,
+              "firstNameError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
         />
       </div>
       <p className="mb-3 text-danger" id="firstNameError"></p>
@@ -154,8 +75,26 @@ function CreateContactForm({
           type="text"
           name="lastName"
           className="form-control"
-          onChange={(e) => validateLastName(e, "lastNameError")}
-          onBlur={(e) => validateLastName(e, "lastNameError")}
+          onChange={(e) =>
+            Validations.validateLastName(
+              e,
+              "lastNameError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
+          onBlur={(e) =>
+            Validations.validateLastName(
+              e,
+              "lastNameError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
         />
       </div>
       <p className="mb-3 text-danger" id="lastNameError">
@@ -175,8 +114,27 @@ function CreateContactForm({
         <input
           type="text"
           name="address"
-          placeholder="Eg: Menachem Begin 145, Tel Aviv"
-          onChange={validateAddress}
+          placeholder="Eg: Menachem Begin 145"
+          onChange={(e) =>
+            Validations.validateAddress(
+              e,
+              "addressError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
+          onBlur={(e) =>
+            Validations.validateAddress(
+              e,
+              "addressError",
+              setErrors,
+              errors,
+              setValues,
+              initialValues
+            )
+          }
           className="form-control"
         />
       </div>
@@ -189,8 +147,26 @@ function CreateContactForm({
             </label>
             <input
               type="text"
-              onChange={validatePhoneNumber}
-              onBlur={validatePhoneNumber}
+              onChange={(e) =>
+                Validations.validatePhoneNumber(
+                  e,
+                  "phoneNumberError",
+                  setErrors,
+                  errors,
+                  setValues,
+                  initialValues
+                )
+              }
+              onBlur={(e) =>
+                Validations.validatePhoneNumber(
+                  e,
+                  "phoneNumberError",
+                  setErrors,
+                  errors,
+                  setValues,
+                  initialValues
+                )
+              }
               name="phoneNumber"
               className="form-control"
               placeholder="Eg: +972-052-42214722"
@@ -220,13 +196,13 @@ function CreateContactForm({
         <Button
           onClick={() => {
             onHide();
-              setValues({
-                firstName: "",
-                lastName: "",
-                phoneNumber: [],
-                nickname: "",
-                photo: "",
-              });
+            setValues({
+              firstName: "",
+              lastName: "",
+              phoneNumber: [],
+              nickname: "",
+              photo: "",
+            });
           }}
           variant="danger"
           className="me-3"
@@ -235,7 +211,7 @@ function CreateContactForm({
         </Button>
         <Button
           type="button"
-          onClick={handleAddUser}
+          onClick={() => Utils.handleSubmitUser(requiredValues, addUser)}
           variant="success"
           id="submit-button"
         >

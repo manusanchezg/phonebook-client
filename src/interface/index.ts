@@ -9,7 +9,7 @@ export interface ErrorsInterface {
 export interface InitalValuesInterface {
   firstName: string;
   lastName: string;
-  phoneNumber: number[];
+  phoneNumbers: number[];
   nickname: string;
   photo: string;
 }

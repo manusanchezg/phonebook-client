@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 import defaultProfilePic from "../../assets/profile.svg";
 import { CREATE_CONTACT } from "../../GraphQL/mutations";
 import "../../style/CreateContact.css";
@@ -16,7 +17,7 @@ function CreateContact({
   const [initialValues, setValues] = useState({
     firstName: "",
     lastName: "",
-    phoneNumber: [],
+    phoneNumbers: [],
     nickname: "",
     photo: "",
   });
@@ -24,22 +25,27 @@ function CreateContact({
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
 
   const addUser = () => {
-    console.log(initialValues);
     CreateContact({
-      variables: { ...initialValues, photo: "Some photo" },
-    }).then(result => console.log(result))
-    .catch(err => console.log(err))
+      variables: { ...initialValues },
+    })
+      .then((result) => {
+        Swal.fire({
+          title: "User Added succesfully",
+          icon: "success",
+        }).then(() => closePopUp());
+      })
+      .catch((err) => console.log(err));
   };
 
   const closePopUp = () => {
-    onHide()
-      setValues({
-        firstName: "",
-        lastName: "",
-        phoneNumber: [],
-        nickname: "",
-        photo: "",
-      });
+    onHide();
+    setValues({
+      firstName: "",
+      lastName: "",
+      phoneNumbers: [],
+      nickname: "",
+      photo: "",
+    });
   };
 
   const image = "";

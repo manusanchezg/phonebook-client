@@ -1,8 +1,14 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 import defaultProfilePic from "../../assets/profile.svg";
+import { UPDATE_CONTACT } from "../../GraphQL/mutations";
 import { GET_CONTACT_INFO } from "../../GraphQL/queries";
+import { ErrorsInterface } from "../../interface";
+import Utils from "../../utils";
+import Validations from "../../utils/validation";
 
 function UpdateContact({
   show,
@@ -17,6 +23,28 @@ function UpdateContact({
     variables: { contactId },
   });
 
+  const [contactInfo, setInfo] = useState({
+    ...data.Contact,
+  });
+
+  const [updateError, setError] = useState<ErrorsInterface>({});
+
+  const [UpdateContact, {}] = useMutation(UPDATE_CONTACT);
+
+  const updateUser = () => {
+    UpdateContact({
+      variables: { ...contactInfo, updateContactId: contactId },
+    })
+      .then((result) => {
+        Swal.fire({
+          title: "User updated succesfully",
+          icon: "success",
+        }).then(() => onHide());
+      })
+      .catch((err) => console.log(err));
+  };
+
+  console.log(data.Contact)
   const image = "";
   return (
     <Modal
@@ -57,24 +85,101 @@ function UpdateContact({
                   style={{ visibility: "hidden" }}
                 />
               </figure>
-              <div className="d-flex flex-column justify-content-center w-50">
-                <label htmlFor="firstName"></label>
-                <h2 className="ms-3">{`${data.Contact.firstName} ${data.Contact.lastName}`}</h2>
-                <div className="mb-3">
-                  <label htmlFor="nickname" className="fw-bolder fs-5">
+              <div className="d-flex flex-column justify-content-center w-50 input-group mb-3">
+                <div className="mb-3 input-group">
+                  <label
+                    htmlFor="firstName"
+                    className="fw-bolder fs-5 input-group-text"
+                  >
+                    First name:{" "}
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.Contact.firstName}
+                    onChange={(e) =>
+                      Validations.validateFirstName(
+                        e,
+                        "firstNameError",
+                        setError,
+                        updateError,
+                        setInfo,
+                        contactInfo
+                      )
+                    }
+                    onBlur={(e) =>
+                      Validations.validateFirstName(
+                        e,
+                        "firstNameError",
+                        setError,
+                        updateError,
+                        setInfo,
+                        contactInfo
+                      )
+                    }
+                  />
+                </div>
+                <p className="mb-3 text-danger" id="firstNameError"></p>
+                <div className="mb-3 input-group">
+                  <label
+                    htmlFor="lastName"
+                    className="fw-bolder fs-5 input-group-text"
+                  >
+                    Last name:{" "}
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    defaultValue={data.Contact.lastName}
+                    onChange={(e) =>
+                      Validations.validateLastName(
+                        e,
+                        "lastNameError",
+                        setError,
+                        updateError,
+                        setInfo,
+                        contactInfo
+                      )
+                    }
+                    onBlur={(e) =>
+                      Validations.validateLastName(
+                        e,
+                        "lastNameError",
+                        setError,
+                        updateError,
+                        setInfo,
+                        contactInfo
+                      )
+                    }
+                  />
+                </div>
+                <p className="mb-3 text-danger" id="lastNameError"></p>
+                <div className="mb-3 input-group">
+                  <label
+                    htmlFor="nickname"
+                    className="fw-bolder fs-5 input-group-text"
+                  >
                     Nickname:{" "}
                   </label>{" "}
-                  <span>
-                    {data.Contact.nickname || "Doesn't have a nickname yet"}
-                  </span>
+                  <input
+                    defaultValue={data.Contact.nickname}
+                    className="form-control"
+                  />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="address" className="fw-bolder fs-5">
+                <div className="mb-3 input-group">
+                  <label
+                    htmlFor="address"
+                    className="fw-bolder fs-5 input-group-text"
+                  >
                     Address:{" "}
                   </label>{" "}
-                  <span>{data.Contact.address}</span>
+                  <input
+                    defaultValue={data.Contact.address}
+                    className="form-control"
+                  />
                 </div>
-                <div className="mb-3">
+                <p className="mb-3 text-danger" id="addressError"></p>
+                <div className="mb-3 input-group">
                   <label htmlFor="phoneNumbers" className="fw-bolder fs-5">
                     Phone number/s:{" "}
                   </label>{" "}
@@ -92,7 +197,12 @@ function UpdateContact({
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-success">Update</Button>
+        <Button
+          variant="outline-success"
+          onClick={() => Utils.handleSubmitUser(updateError, updateUser)}
+        >
+          Update
+        </Button>
         <Button variant="outline-danger" onClick={onHide}>
           Close
         </Button>
