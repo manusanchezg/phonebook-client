@@ -40,7 +40,7 @@ export default class Utils {
   static handleSubmitUser(requiredContactValues: any, callback : Function) {
     let submit = true;
     for (const value in requiredContactValues) {
-      if (!requiredContactValues[value]) {
+      if (requiredContactValues[value]) {
         submit = false;
       }
     }

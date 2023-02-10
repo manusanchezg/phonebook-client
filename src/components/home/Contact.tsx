@@ -4,7 +4,15 @@ import profilePic from "../../assets/profile.svg";
 import ContactInfo from "../contact/ContactInfo";
 import UpdateContact from "../contact/UpdateContact";
 
-function Contact({ contact }: { contact: ContactInterface }) {
+function Contact({
+  contact,
+  contacts,
+  setContacts,
+}: {
+  contact: ContactInterface;
+  contacts: ContactInterface[];
+  setContacts: Function;
+}) {
   const [contactInfoModalShow, setInfoModalShow] = React.useState(false);
   const [updateContactModalShow, setUpdateModalShow] = React.useState(false);
   return (
@@ -31,7 +39,7 @@ function Contact({ contact }: { contact: ContactInterface }) {
           show={contactInfoModalShow}
           onHide={() => setInfoModalShow(false)}
           contactId={contact.id}
-          onShow={()=>setUpdateModalShow(true)}
+          onShow={() => setUpdateModalShow(true)}
         />
       ) : null}
       {updateContactModalShow ? (
@@ -39,6 +47,8 @@ function Contact({ contact }: { contact: ContactInterface }) {
           show={updateContactModalShow}
           contactId={contact.id}
           onHide={() => setUpdateModalShow(false)}
+          contacts={contacts}
+          setContacts={setContacts}
         />
       ) : null}
     </>

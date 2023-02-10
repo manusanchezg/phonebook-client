@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import defaultProfilePic from "../../assets/profile.svg";
 import { UPDATE_CONTACT } from "../../GraphQL/mutations";
 import { GET_CONTACT_INFO } from "../../GraphQL/queries";
-import { ErrorsInterface } from "../../interface";
+import { ContactInterface, ErrorsInterface } from "../../interface";
 import Utils from "../../utils";
 import Validations from "../../utils/validation";
 
@@ -14,10 +14,14 @@ function UpdateContact({
   show,
   onHide,
   contactId,
+  contacts,
+  setContacts,
 }: {
   show: boolean;
   onHide: () => void;
   contactId: string;
+  contacts: ContactInterface[];
+  setContacts: Function;
 }) {
   const { data, loading, error } = useQuery(GET_CONTACT_INFO, {
     variables: { contactId },
@@ -39,13 +43,12 @@ function UpdateContact({
         Swal.fire({
           title: "User updated succesfully",
           icon: "success",
-        }).then(() => onHide());
+        }).then(() => onHide())
+        .then(() => window.location.reload());
       })
       .catch((err) => console.log(err));
   };
 
-  console.log(data.Contact)
-  const image = "";
   return (
     <Modal
       show={show}
@@ -164,6 +167,12 @@ function UpdateContact({
                   <input
                     defaultValue={data.Contact.nickname}
                     className="form-control"
+                    onChange={(e) => {
+                      setInfo({ ...contactInfo, nickname: e.target.value });
+                    }}
+                    onBlur={(e) => {
+                      setInfo({ ...contactInfo, nickname: e.target.value });
+                    }}
                   />
                 </div>
                 <div className="mb-3 input-group">
@@ -176,6 +185,14 @@ function UpdateContact({
                   <input
                     defaultValue={data.Contact.address}
                     className="form-control"
+                    onChange={(e) => Validations.validateAddress(
+                      e,
+                      "addressError",
+                      setError,
+                      updateError,
+                      setInfo,
+                      contactInfo
+                    )}
                   />
                 </div>
                 <p className="mb-3 text-danger" id="addressError"></p>

@@ -4,8 +4,15 @@ import { LOAD_CONTACTS } from "../../GraphQL/queries";
 import { ContactInterface } from "../../interface";
 import Contact from "./Contact";
 
-function ContactList({ search }: { search: String }) {
-  const [contacts, setContacts] = useState<ContactInterface[]>([]);
+function ContactList({
+  search,
+  contacts,
+  setContacts,
+}: {
+  search: String;
+  contacts: ContactInterface[];
+  setContacts: Function;
+}) {
   let offset = 0;
   const LIMIT = 5;
   const { data, loading, error, refetch } = useQuery(LOAD_CONTACTS, {
@@ -36,7 +43,12 @@ function ContactList({ search }: { search: String }) {
     <main className="d-flex flex-column justify-content-center align-items-center bg-color-BBE5ED pt-3">
       {!loading ? (
         contacts.map((contact: ContactInterface) => (
-          <Contact key={contact.id} contact={contact} />
+          <Contact
+            key={contact.id}
+            contact={contact}
+            contacts={contacts}
+            setContacts={setContacts}
+          />
         ))
       ) : (
         <div>loading...</div>
