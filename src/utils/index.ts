@@ -59,16 +59,16 @@ export default class Utils {
     }
   }
 
-  static async uploadFile(file: File) {
-    const s3 = new ReactS3Client(s3Config);
+  // static async uploadFile(file: File) {
+  //   const s3 = new ReactS3Client(s3Config);
 
-    try {
-      const response = await s3.uploadFile(file, file.name);
-      console.log(response);
-      return response.location
-    } catch (exception) {
-      console.log(exception);
-    }
+  //   try {
+  //     const response = await s3.uploadFile(file, file.name);
+  //     console.log(response);
+  //     return response.location
+  //   } catch (exception) {
+  //     console.log(exception);
+  //   }
 
     //   AWS.config.update({
     //     accessKeyId: process.env.S3_ACCESS_KEY,
@@ -94,5 +94,5 @@ export default class Utils {
     //     evt.httpResponse.body
     //   })
     //   .send(err => console.log(err))
-  }
+  //}
 }
