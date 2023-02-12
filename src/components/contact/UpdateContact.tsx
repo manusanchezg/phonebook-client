@@ -58,7 +58,7 @@ function UpdateContact({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter"></Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Modify contact</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {!loading ? (
@@ -99,7 +99,7 @@ function UpdateContact({
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={data.Contact.firstName}
+                    defaultValue={data.Contact.first_mame}
                     onChange={(e) =>
                       Validations.validateFirstName(
                         e,
@@ -133,7 +133,7 @@ function UpdateContact({
                   <input
                     type="text"
                     className="form-control"
-                    defaultValue={data.Contact.lastName}
+                    defaultValue={data.Contact.last_name}
                     onChange={(e) =>
                       Validations.validateLastName(
                         e,
@@ -201,7 +201,7 @@ function UpdateContact({
                     Phone number/s:{" "}
                   </label>{" "}
                   <ul className="list-group list-group-flush w-50">
-                    {data.Contact.phoneNumbers.map((phone: string) => (
+                    {data.Contact.phone_numbers.map((phone: string) => (
                       <li className="list-group-item text-center">{phone}</li>
                     ))}
                   </ul>

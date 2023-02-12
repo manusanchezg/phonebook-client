@@ -2,25 +2,25 @@ import { gql } from "@apollo/client";
 
 export const CREATE_CONTACT = gql`
   mutation CreateContact(
-    $firstName: String!
-    $lastName: String!
+    $first_name: String!
+    $last_name: String!
     $nickname: String
-    $phoneNumbers: [Float!]!
+    $phone_numbers: [Float!]!
     $address: String!
     $photo: String!
   ) {
     createContact(
-      firstName: $firstName
-      lastName: $lastName
+      first_name: $first_name
+      last_name: $last_name
       nickname: $nickname
-      phoneNumbers: $phoneNumbers
+      phone_numbers: $phone_numbers
       photo: $photo
       address: $address
     ) {
-      firstName
-      lastName
+      first_name
+      last_name
       nickname
-      phoneNumbers
+      phone_numbers
       photo
       address
     }
@@ -30,29 +30,39 @@ export const CREATE_CONTACT = gql`
 export const UPDATE_CONTACT = gql`
   mutation UpdateContact(
     $updateContactId: ID!
-    $firstName: String!
-    $lastName: String!
+    $first_name: String!
+    $last_name: String!
     $address: String!
-    $phoneNumbers: [Float!]!
+    $phone_numbers: [Float!]!
     $photo: String!
     $nickname: String
   ) {
     updateContact(
       id: $updateContactId
-      firstName: $firstName
-      lastName: $lastName
+      first_name: $first_name
+      last_name: $last_name
       address: $address
-      phoneNumbers: $phoneNumbers
+      phone_numbers: $phone_numbers
       photo: $photo
       nickname: $nickname
     ) {
       id
-      firstName
-      lastName
+      first_name
+      last_name
       nickname
-      phoneNumbers
+      phone_numbers
       address
       photo
     }
   }
+`;
+
+export const DELETE_CONTACT = gql`
+mutation DeleteContact($deleteContactId: ID!) {
+  deleteContact(id: $deleteContactId) {
+    first_name
+    last_name
+    nickname
+  }
+}
 `;

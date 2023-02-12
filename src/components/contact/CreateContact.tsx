@@ -20,6 +20,7 @@ function CreateContact({
     phoneNumbers: [],
     nickname: "",
     photo: "",
+    address: "",
   });
 
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
@@ -45,10 +46,9 @@ function CreateContact({
       phoneNumbers: [],
       nickname: "",
       photo: "",
+      address: "",
     });
   };
-
-  const image = "";
   return (
     <Modal
       show={show}
@@ -67,7 +67,7 @@ function CreateContact({
           <figure className="d-flex flex-column justify-content-center ms-3  w-25">
             <img
               className="img-thumbnail w-50"
-              src={image ? image : defaultProfilePic}
+              src={defaultProfilePic}
               alt=""
             />
             <figcaption className="mt-2">Profile picture</figcaption>

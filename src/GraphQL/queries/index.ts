@@ -4,10 +4,10 @@ export const LOAD_CONTACTS = gql`
   query Contacts($offset: Int, $limit: Int, $search: String) {
     contacts(offset: $offset, limit: $limit, search: $search) {
       id
-      firstName
-      lastName
+      first_name
+      last_name
       nickname
-      phoneNumbers
+      phone_numbers
       photo
     }
   }
@@ -17,10 +17,10 @@ export const GET_CONTACT_INFO = gql`
   query Contact($contactId: ID!) {
     Contact(id: $contactId) {
       id
-      firstName
-      lastName
+      first_name
+      last_name
       nickname
-      phoneNumbers
+      phone_numbers
       address
       photo
   }

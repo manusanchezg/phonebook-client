@@ -34,3 +34,7 @@ code {
   background-color: lightgray;
   transition: 0.3s;
 }
+
+.delete-button-size {
+  max-width: 50px;
+}

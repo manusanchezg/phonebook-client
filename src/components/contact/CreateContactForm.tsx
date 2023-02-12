@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import Swal from "sweetalert2";
 import plusCircle from "../../assets/plus-circle.svg";
 import { InitalValuesInterface } from "../../interface";
 import Utils from "../../utils";
@@ -17,6 +16,7 @@ function CreateContactForm({
   setValues: Function;
   addUser: Function;
 }) {
+  const [file, setFile] = useState<File>();
   const [errors, setErrors] = useState({
     firstNameError: "",
     lastNameError: "",
@@ -28,12 +28,18 @@ function CreateContactForm({
     firstName: initialValues.firstName,
     lastName: initialValues.lastName,
     phoneNumbers: initialValues.phoneNumbers,
+    address: initialValues.address
   };
 
   const addInputField = useCallback(
     (e: React.MouseEvent<HTMLImageElement>) => {},
     [initialValues.phoneNumbers]
   );
+
+  const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files![0])
+    console.log(e.target.files![0])
+  };
   return (
     <form>
       <div className="input-group mb-3">
@@ -184,10 +190,18 @@ function CreateContactForm({
         {" "}
       </p>
       <div className="input-group mb-3">
-        <label htmlFor="profilePic" className="me-3">
-          Upload an image <span className="text-danger">*</span>
+        <label
+          htmlFor="profilePic"
+          className="me-2 text-center border p-2 rounded upload-button"
+        >
+          Upload image <span className="text-danger">*</span>
         </label>
-        <input type="file" name="profilePic" />
+        <input
+          type="file"
+          style={{ visibility: "hidden" }}
+          onChange={handleInputFile}
+          id="profilePic"
+        />
       </div>
       <Modal.Footer>
         <span className="me-5">

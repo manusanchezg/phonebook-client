@@ -34,7 +34,7 @@ function ContactInfo({
       <Modal.Body>
         {!loading ? (
           <>
-            <h2 className="ms-3">{`${data.Contact.firstName} ${data.Contact.lastName}`}</h2>
+            <h2 className="ms-3">{`${data.Contact.first_name} ${data.Contact.last_name}`}</h2>
             <div className="d-flex justify-content-around">
               <figure className="d-flex flex-column justify-content-center ms-3  w-25">
                 <img
@@ -72,7 +72,7 @@ function ContactInfo({
                     Phone number/s:{" "}
                   </label>{" "}
                   <ul className="list-group list-group-flush w-50">
-                    {data.Contact.phoneNumbers.map((phone: string) => (
+                    {data.Contact.phone_numbers.map((phone: string) => (
                       <li className="list-group-item text-center">{phone}</li>
                     ))}
                   </ul>
