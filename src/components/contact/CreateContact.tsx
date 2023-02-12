@@ -15,9 +15,9 @@ function CreateContact({
   onHide: () => void;
 }) {
   const [initialValues, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumbers: [],
+    first_name: "",
+    last_name: "",
+    phone_numbers: [],
     nickname: "",
     photo: "",
     address: "",
@@ -26,6 +26,7 @@ function CreateContact({
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
 
   const addUser = () => {
+    console.log({...initialValues})
     CreateContact({
       variables: { ...initialValues },
     })
@@ -33,21 +34,14 @@ function CreateContact({
         Swal.fire({
           title: "User Added succesfully",
           icon: "success",
-        }).then(() => closePopUp());
+        })
+        .then(() => closePopUp());
       })
       .catch((err) => console.log(err));
   };
 
   const closePopUp = () => {
     onHide();
-    setValues({
-      firstName: "",
-      lastName: "",
-      phoneNumbers: [],
-      nickname: "",
-      photo: "",
-      address: "",
-    });
   };
   return (
     <Modal

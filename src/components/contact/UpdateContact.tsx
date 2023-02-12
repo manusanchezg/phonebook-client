@@ -26,7 +26,7 @@ function UpdateContact({
   const { data, loading, error } = useQuery(GET_CONTACT_INFO, {
     variables: { contactId },
   });
-
+  const [file, setFile] = useState<File>()
   const [contactInfo, setInfo] = useState({
     ...data.Contact,
   });
@@ -34,6 +34,10 @@ function UpdateContact({
   const [updateError, setError] = useState<ErrorsInterface>({});
 
   const [UpdateContact, {}] = useMutation(UPDATE_CONTACT);
+
+  const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files![0]);
+  };
 
   const updateUser = () => {
     UpdateContact({
@@ -86,12 +90,13 @@ function UpdateContact({
                   type="file"
                   id="files"
                   style={{ visibility: "hidden" }}
+                  onChange={handleInputFile}
                 />
               </figure>
               <div className="d-flex flex-column justify-content-center w-50 input-group mb-3">
                 <div className="mb-3 input-group">
                   <label
-                    htmlFor="firstName"
+                    htmlFor="first_name"
                     className="fw-bolder fs-5 input-group-text"
                   >
                     First name:{" "}
@@ -216,7 +221,7 @@ function UpdateContact({
       <Modal.Footer>
         <Button
           variant="outline-success"
-          onClick={() => Utils.handleSubmitUser(updateError, updateUser)}
+          onClick={() => Utils.handleSubmitUser(updateError, updateUser, file!)}
         >
           Update
         </Button>

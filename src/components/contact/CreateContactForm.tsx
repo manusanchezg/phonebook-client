@@ -24,31 +24,25 @@ function CreateContactForm({
     nicknameError: "",
     addressError: "",
   });
-  const requiredValues: any = {
-    firstName: initialValues.firstName,
-    lastName: initialValues.lastName,
-    phoneNumbers: initialValues.phoneNumbers,
-    address: initialValues.address
-  };
 
   const addInputField = useCallback(
     (e: React.MouseEvent<HTMLImageElement>) => {},
-    [initialValues.phoneNumbers]
+    [initialValues.phone_numbers]
   );
 
   const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files![0])
-    console.log(e.target.files![0])
+    setFile(e.target.files![0]);
   };
+
   return (
     <form>
       <div className="input-group mb-3">
-        <label htmlFor="firstName" className="input-group-text">
+        <label htmlFor="first_name" className="input-group-text">
           First name: <span className="text-danger">*</span>{" "}
         </label>
         <input
           type="text"
-          name="firstName"
+          name="first_name"
           className="form-control"
           onBlur={(e) =>
             Validations.validateFirstName(
@@ -110,7 +104,14 @@ function CreateContactForm({
         <label htmlFor="nickname" className="input-group-text">
           Nickname:{" "}
         </label>
-        <input type="text" name="nickname" className="form-control" />
+        <input
+          type="text"
+          name="nickname"
+          className="form-control"
+          onChange={(e) =>
+            setValues({ ...initialValues, nickname: e.target.value })
+          }
+        />
       </div>
       <p className="mb-3 text-danger"> </p>
       <div className="input-group mb-3">
@@ -211,9 +212,9 @@ function CreateContactForm({
           onClick={() => {
             onHide();
             setValues({
-              firstName: "",
-              lastName: "",
-              phoneNumber: [],
+              first_name: "",
+              last_name: "",
+              phone_number: [],
               nickname: "",
               photo: "",
             });
@@ -225,7 +226,7 @@ function CreateContactForm({
         </Button>
         <Button
           type="button"
-          onClick={() => Utils.handleSubmitUser(requiredValues, addUser)}
+          onClick={() => Utils.handleSubmitUser(errors, addUser, file!)}
           variant="success"
           id="submit-button"
         >

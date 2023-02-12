@@ -38,7 +38,6 @@ function ContactList({
   }, [data]);
 
   useEffect(() => document.addEventListener("scroll", onScroll), []);
-  // console.log(contacts)
   return (
     <main className="d-flex flex-column justify-content-center align-items-center bg-color-BBE5ED pt-3">
       {!loading ? (

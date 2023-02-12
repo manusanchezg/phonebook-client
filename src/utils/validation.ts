@@ -16,7 +16,7 @@ export default class Validations {
 
   static isPhoneNumber(string: string): string {
     const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$/;
-    if (!regex.test(string)) return "Inconrrect phone number";
+    if (!regex.test(string)) return "Incorrect phone number";
     return "";
   }
 
@@ -49,7 +49,7 @@ export default class Validations {
     } else {
       p!.textContent = "";
       setErrors({ ...errors, firstNameError: "" });
-      setValues({ ...initialValues, firstName: e.target.value });
+      setValues({ ...initialValues, first_name: e.target.value });
     }
   }
 
@@ -76,7 +76,7 @@ export default class Validations {
     } else {
       p!.textContent = "";
       setErrors({ ...errors, lastNameError: "" });
-      setValues({ ...initialValues, lastName: e.target.value });
+      setValues({ ...initialValues, last_name: e.target.value });
     }
   }
 
@@ -95,9 +95,11 @@ export default class Validations {
     if (isEmpty) {
       addressError = isEmpty;
       p!.textContent = addressError;
+      setErrors({ ...errors, addressError });
     } else if (isAddress) {
       addressError = isAddress;
       p!.textContent = addressError;
+      setErrors({ ...errors, addressError });
     } else {
       p!.textContent = "";
       setErrors({ ...errors, addressError: "" });
@@ -120,19 +122,21 @@ export default class Validations {
     if (isEmpty) {
       phoneNumberError = isEmpty;
       p!.textContent = phoneNumberError;
+      setErrors({ ...errors, phoneNumberError });
     } else if (isPhoneNumber) {
       phoneNumberError = isPhoneNumber;
       p!.textContent = phoneNumberError;
+      setErrors({ ...errors, phoneNumberError });
     } else {
       const phoneNumbers = new Set([
-        ...initialValues.phoneNumbers,
+        ...initialValues.phone_numbers,
         Number(e.target.value),
       ]);
       p!.textContent = "";
       setErrors({ ...errors, phoneNumberError: "" });
       setValues({
         ...initialValues,
-        phoneNumbers: [...phoneNumbers],
+        phone_numbers: [...phoneNumbers],
       });
     }
   }
