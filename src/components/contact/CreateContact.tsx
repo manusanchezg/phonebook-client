@@ -26,7 +26,6 @@ function CreateContact({
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
 
   const addUser = () => {
-    console.log({...initialValues})
     CreateContact({
       variables: { ...initialValues },
     })
