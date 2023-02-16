@@ -14,19 +14,15 @@ function UpdateContact({
   show,
   onHide,
   contactId,
-  contacts,
-  setContacts,
 }: {
   show: boolean;
   onHide: () => void;
   contactId: string;
-  contacts: ContactInterface[];
-  setContacts: Function;
 }) {
   const { data, loading, error } = useQuery(GET_CONTACT_INFO, {
     variables: { contactId },
   });
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useState<File>();
   const [contactInfo, setInfo] = useState({
     ...data.Contact,
   });
@@ -39,16 +35,21 @@ function UpdateContact({
     setFile(e.target.files![0]);
   };
 
-  const updateUser = () => {
+  const updateUser = (imageUrl: string) => {
     UpdateContact({
-      variables: { ...contactInfo, updateContactId: contactId },
+      variables: {
+        ...contactInfo,
+        updateContactId: contactId,
+        photo: imageUrl,
+      },
     })
       .then((result) => {
         Swal.fire({
           title: "User updated succesfully",
           icon: "success",
-        }).then(() => onHide())
-        .then(() => window.location.reload());
+        })
+          .then(() => onHide())
+          .then(() => window.location.reload());
       })
       .catch((err) => console.log(err));
   };
@@ -62,7 +63,9 @@ function UpdateContact({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Modify contact</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Modify contact
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {!loading ? (
@@ -72,10 +75,10 @@ function UpdateContact({
                 <img
                   className="img-thumbnail"
                   src={
-                    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/.test(
-                      data.Contact.photo
-                    )
+                    data.Contact.photo
                       ? data.Contact.photo
+                      : file
+                      ? URL.createObjectURL(file)
                       : defaultProfilePic
                   }
                   alt=""
@@ -190,14 +193,16 @@ function UpdateContact({
                   <input
                     defaultValue={data.Contact.address}
                     className="form-control"
-                    onChange={(e) => Validations.validateAddress(
-                      e,
-                      "addressError",
-                      setError,
-                      updateError,
-                      setInfo,
-                      contactInfo
-                    )}
+                    onChange={(e) =>
+                      Validations.validateAddress(
+                        e,
+                        "addressError",
+                        setError,
+                        updateError,
+                        setInfo,
+                        contactInfo
+                      )
+                    }
                   />
                 </div>
                 <p className="mb-3 text-danger" id="addressError"></p>
@@ -207,7 +212,12 @@ function UpdateContact({
                   </label>{" "}
                   <ul className="list-group list-group-flush w-50">
                     {data.Contact.phone_numbers.map((phone: string) => (
-                      <li className="list-group-item text-center">{phone}</li>
+                      <li
+                        key={`phone-${phone}`}
+                        className="list-group-item text-center"
+                      >
+                        {phone}
+                      </li>
                     ))}
                   </ul>
                 </div>

@@ -45,8 +45,6 @@ function ContactList({
           <Contact
             key={contact.id}
             contact={contact}
-            contacts={contacts}
-            setContacts={setContacts}
           />
         ))
       ) : (

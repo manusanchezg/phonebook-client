@@ -2,7 +2,6 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
-import defaultProfilePic from "../../assets/profile.svg";
 import { CREATE_CONTACT } from "../../GraphQL/mutations";
 import "../../style/CreateContact.css";
 import CreateContactForm from "./CreateContactForm";
@@ -25,9 +24,10 @@ function CreateContact({
 
   const [CreateContact, { error }] = useMutation(CREATE_CONTACT);
 
-  const addUser = () => {
+  const addUser = (imageUrl: string) => {
+    console.log({...initialValues, photo: imageUrl})
     CreateContact({
-      variables: { ...initialValues },
+      variables: { ...initialValues, photo: imageUrl },
     })
       .then((result) => {
         Swal.fire({
@@ -56,16 +56,6 @@ function CreateContact({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>
-          <figure className="d-flex flex-column justify-content-center ms-3  w-25">
-            <img
-              className="img-thumbnail w-50"
-              src={defaultProfilePic}
-              alt=""
-            />
-            <figcaption className="mt-2">Profile picture</figcaption>
-          </figure>
-        </div>
         <CreateContactForm
           onHide={onHide}
           initialValues={initialValues}

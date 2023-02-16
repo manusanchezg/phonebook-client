@@ -11,12 +11,8 @@ import Swal from "sweetalert2";
 
 function Contact({
   contact,
-  contacts,
-  setContacts,
 }: {
   contact: ContactInterface;
-  contacts: ContactInterface[];
-  setContacts: Function;
 }) {
   const [contactInfoModalShow, setInfoModalShow] = React.useState(false);
   const [updateContactModalShow, setUpdateModalShow] = React.useState(false);
@@ -68,7 +64,7 @@ function Contact({
           className="d-flex justify-content-center"
         >
           <figure className="w-25 py-3">
-            <img src={profilePic} className="w-100" alt="" />
+            <img src={contact.photo ? contact.photo : profilePic} className="w-100" alt="" />
           </figure>
           <div className="py-3 w-50 d-flex flex-column align-items-center justify-content-center">
             <h2 className="color-784F41">
@@ -95,9 +91,8 @@ function Contact({
         <UpdateContact
           show={updateContactModalShow}
           contactId={contact.id}
-          onHide={() => setUpdateModalShow(false)}
-          contacts={contacts}
-          setContacts={setContacts}
+          onHide={() => setUpdateModalShow(false)
+          }
         />
       ) : null}
     </>

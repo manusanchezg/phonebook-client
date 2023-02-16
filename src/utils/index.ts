@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 export default class Utils {
@@ -38,7 +39,7 @@ export default class Utils {
   static async handleSubmitUser(
     requiredContactValues: any,
     callback: Function,
-    file: File,
+    file: File
   ) {
     let submit = true;
     for (const value in requiredContactValues) {
@@ -47,8 +48,8 @@ export default class Utils {
       }
     }
     if (submit) {
-      // await this.uploadFile(file)
-      callback();
+      const imageUrl = await this.uploadFile(file);
+      callback(imageUrl.data);
     } else {
       Swal.fire({
         icon: "error",
@@ -56,6 +57,16 @@ export default class Utils {
       });
     }
   }
-  private uploadFile() {}
-
+  static async uploadFile(file: File): Promise<any> {
+    const imageUrl: string = await axios.post(
+      "http://localhost:3333/file-receptor",
+      { file },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return imageUrl;
+  }
 }
